@@ -3,7 +3,7 @@ const Product = require("../models/productModel")
 const{adminMiddleware, authMiddleware} = require("../middleware/authMiddleware")
 const router = express.Router()
 
-//Users can browse products ans view product details
+//Users can browse products and view product details
 router.get("/", async(req, res) =>{
     const products = await Product.find().populate("category")
     res.json(products)

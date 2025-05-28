@@ -5,6 +5,13 @@ const generateToken = (id) => {
     })
 }
 
+const accessToken = await jwt.sign({user}, 
+                 `${process.env.ACCESS_TOKEN}`,
+                 {expiresIn : "5m"}
 
 
-module.exports = generateToken
+)
+
+
+
+module.exports = {generateToken, accessToken}

@@ -1,7 +1,7 @@
 const express = require("express")
 const dotenv = require("dotenv").config()
 const connectDB = require("./db")
-const userRoutes = require("./routes/userRoutes")
+const authRoutes = require("./routes/authRoutes")
 const productRoutes = require("./routes/productRoutes")
 const orderRoutes = require("./routes/orderRoutes")
 const categoryRoutes = require("./routes/categoryRoutes")
@@ -16,7 +16,7 @@ app.listen(PORT, ()=>{
 })
 
 
-app.use("/api/users", userRoutes)
+app.use("/api/users", authRoutes)
 app.use("/api/products", productRoutes)
 app.use("/api/orders", orderRoutes)
 app.use("/api/categories", categoryRoutes)

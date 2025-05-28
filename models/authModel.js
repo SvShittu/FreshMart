@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs")
 
 const userSchema = new mongoose.Schema({
 
-username : {type: String, require: true, unique: true, minlength: 4, maxlength: 20},
+userName : {type: String, require: true, unique: true, minlength: 4, maxlength: 20},
 email: {type: String, require: true, unique: true},
 password: {type: String, require: true, minlength: 6},
 role: {type: String, enum: ["user", "admin"], default: "user"},
@@ -26,4 +26,4 @@ userSchema.methods.matchPassword = async(enteredPassword)=>{
 }
 
 const User = new mongoose.model("User", userSchema)
-module.exports = User
+module.exports = User  

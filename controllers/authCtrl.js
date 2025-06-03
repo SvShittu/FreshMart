@@ -1,32 +1,34 @@
- const User = require("../models/authModel")
+const Users = require("../models/authModel")
 const bcryptjs = require("bcryptjs")
 const generateToken = require("../utils/generateToken")
+
+
 
 const handleUserRegistration= async(req, res)=>{
 
     try {
         const{userName, email, password, role} = req.body
-        const existingUser = await User.findOne({email})
+        const existingUser = await Users.findOne({email})
         if(existingUser){
             return res.status(400).json({message: "User already exists"})
         }
       const hashedPassword = await bcryptjs.hash(password, 12)
         //User Creation
 
-        const user = new User({
-            username,
+        const user = new Users({
+            userName,
              email,
               password: hashedPassword,
                role,
             })
         await user.save()
         return res.status(201).json({
-            _id: user._id,
-            username: user.username,
-            email: user.email,
-            token: generateToken(User._id),
-            password: password,
-            role: user.role
+            _id: Users._id,
+            username: Users.userName,
+            email: Users.email,
+            token: generateToken(Users._id),
+            password: hashedPassword,
+            role: Users.role
         })
 
 
@@ -40,13 +42,13 @@ const handleUserRegistration= async(req, res)=>{
 const handleLogin = async(req, res)=>{
     const{email, password} = req.body
     try {
-        const user = await User.findOne({email})
+        const user = await Users.findOne({email})
         if(user && (await user.matchPassword(password))){
             return res.status(200).json({
-                _id: User._id,
-                username: User.username,
-                email: User.email,
-                token: generateToken(User._id)
+                _id: Users._id,
+                username: Users.userName,
+                email: Users.email,
+                token: generateToken(Users._id)
             })
         }else {
             return res.status(401).json({message:"Invalid email or password"})
@@ -59,7 +61,8 @@ const handleLogin = async(req, res)=>{
  const handleForgetPassword = async(req, res) => {
         const{email, userName} = req.body
         try {
-            const user = await User.findOne({email})
+            const user = await Users.findOne({email})
+            
             if(!user){
                 return res.status(400).json({message : "User not found"})
             }
@@ -76,7 +79,7 @@ const handleLogin = async(req, res)=>{
 const handleResetPassword = async(req, res)=>{
     const {password} = req.body
      try {
-        const user = await User.findOne({email: req.user.email})
+        const user = await Users.findOne({email: req.user.email})
     if(!user){
         return res.status(404).json({message: "User account not found"})
     }

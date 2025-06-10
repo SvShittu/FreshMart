@@ -1,10 +1,10 @@
 const nodemailer = require("nodemailer")
 
-const sendForgotPasswordEmail = async(validEmail, token) => {
+const sendForgotPasswordEmail = async(email, token) => {
     try {
         const mailTransport = nodemailer.createTransport({
             service: "gmail",
-        auth: {
+            auth: {
             user: `${process.env.EMAIL}`,
             pass: `${process.env.EMAIL_PASSWORD}`
         }     
@@ -33,4 +33,16 @@ const sendForgotPasswordEmail = async(validEmail, token) => {
         console.log(error)
         
      }
+    }
+
+
+    const validEmail = (email)=>{
+        const re =
+         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase()) 
+    }
+
+    module.exports = {
+        sendForgotPasswordEmail,
+        validEmail
     }

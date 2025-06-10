@@ -1,8 +1,8 @@
 const express = require("express")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
-const User = require("../models/userModel")
-const { register, login, logout, handleUserRegistration, handleLogin, handleForgetPassword, handleLogout, handleResetPassword, } = require("../controllers/authCtrl")
+const User = require("../models/authModel")
+const {handleUserRegistration, handleLogin, handleForgetPassword, handleLogout, handleResetPassword, } = require("../controllers/authCtrl")
 
 const router = express.Router()
 

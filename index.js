@@ -1,11 +1,11 @@
 const express = require("express")
-const dotenv = require("dotenv").config()
+const dotenv = require("dotenv")
 const connectDB = require("./db")
 const authRoutes = require("./routes/authRoutes")
 const productRoutes = require("./routes/productRoutes")
 const orderRoutes = require("./routes/orderRoutes")
 const categoryRoutes = require("./routes/categoryRoutes")
-
+dotenv.config()
 connectDB()
 const app = express()
 app.use(express.json())

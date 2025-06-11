@@ -7,7 +7,7 @@ const placeOrder = async(req, res)=>{
     let total = 0
     const populatedItems = []
     for(const item of items){
-      const product = await Prod.findById(item.Product)
+      const product = await Product.findById(item.Product)
       if(!product){
          res.status(404).json({message: "Product not found"})}
         if(items.quantity > product.stock) {
@@ -27,7 +27,7 @@ const placeOrder = async(req, res)=>{
     total
   })
   await newOrder.save()
-  res.status(201).json({message: "Order successfully placed", orderr})
+  res.status(201).json({message: "Order successfully placed", newOrder})
 } catch (error) { 
         res.status(500).json({message: error.message})
   }

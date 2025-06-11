@@ -4,18 +4,18 @@ const User = require("../models/authModel")
 
 const authMiddleware = async (req, res, next)=>{
      let token
-  if (request.headers.authorization && request.headers.authorization.startsWith('Bearer')) {
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     try {
-      token = request.headers.authorization.split(' ')[1]
+      token = req.headers.authorization.split("")[1]
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
-      request.user = await User.findById(decoded.id).select('-password')
+      req.user = await User.findById(decoded.id).select('-password')
       next()
     } catch (error) {
-      response.status(401).json({ message: 'Not authorized, token failed' })
+      res.status(401).json({ message: 'Not authorized, token failed' })
     }
   }
   if (!token) {
-    response.status(401).json({ message: 'Not authorized, no token' })
+    res.status(401).json({ message: 'Not authorized, no token' })
   }
 }
 const adminMiddleware = (req, res, next)=> {
@@ -26,8 +26,8 @@ const adminMiddleware = (req, res, next)=> {
 }
 
 
-const validateRegistration = async(request, response, next) =>{
-  const{username, email, password} = request.body
+const validateRegistration = async(req, res, next) =>{
+  const{username, email, password} = req.body
 
   const errors = []
 
@@ -46,15 +46,15 @@ const validateRegistration = async(request, response, next) =>{
   }
 
 if(errors.length > 0 ){
-  return response.status(400).json({message: errors})
+  return res.status(400).json({message: errors})
 }
 next()
 }
 
 
 // validateLogin
-const validateLogin = async(request, response, next) =>{
-  const{email, password} = request.body
+const validateLogin = async(req, res, next) =>{
+  const{email, password} = req.body
   const errors = []
   if(!email){
     errors.push("Please add your email")
@@ -65,7 +65,7 @@ if(!password){
   errors.push("Please add your password")
 }
 if(errors.length > 0){
-  return response.status(400).json({message: errors})
+  return res.status(400).json({message: errors})
 }
 
 next()

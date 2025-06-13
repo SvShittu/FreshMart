@@ -10,6 +10,13 @@ const orderSchema = new mongoose.Schema({
     },
   ],
   total:{type: Number, require: true},
+  paidAt: {type: Date},
+  isPaid: {type: Boolean, default: false},
+  paymentInfo: {
+    reference: String,
+    channel: String,
+    amount: Number
+  },
   status: { type: String, enum: ["pending", "completed"], default: "pending" },
 }, {timestamps: true })
 

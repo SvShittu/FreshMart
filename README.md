@@ -1,6 +1,6 @@
 # 🛒 FreshMart Backend
 
-This is the backend API for **FreshMart(SuperMarket E-Commerce) — an online grocery store platform.
+This is the backend API for FreshMart(SuperMarket E-Commerce) — an online grocery store platform.
 
 ## 🚀 Features
 
@@ -25,15 +25,15 @@ This is the backend API for **FreshMart(SuperMarket E-Commerce) — an online gr
 
 ## 🏗️ Project Structure
 freshmart-backend/
-├── controllers/ # Handle requests 
-├── models/ # Mongoose schemas
-├── routes/ # Api route definitions
-├── middleware/ # Auth, role-based middleware
-├── utils/ # Utility function(sendEmail)
-├── .env / # Environment variables
-├── index.js / # Entry point
-├── package.json / # Dependencies & scripts
-└── README.md / # Project documentation
+controllers/ # Handle requests 
+models/ # Mongoose schemas
+routes/ # Api route definitions
+middleware/ # Auth, role-based middleware
+utils/ # Utility function(sendEmail)
+.env / # Environment variables
+index.js / # Entry point
+package.json / # Dependencies & scripts
+README.md / # Project documentation
 
 
 

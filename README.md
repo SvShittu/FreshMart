@@ -24,16 +24,16 @@ This is the backend API for FreshMart(SuperMarket E-Commerce) — an online groc
 - Dotenv(for environment variables)
 
 ## 🏗️ Project Structure
-freshmart-backend/
-controllers/ # Handle requests 
-models/ # Mongoose schemas
-routes/ # Api route definitions
-middleware/ # Auth, role-based middleware
-utils/ # Utility function(sendEmail)
-.env / # Environment variables
-index.js / # Entry point
-package.json / # Dependencies & scripts
-README.md / # Project documentation
+- freshmart-backend
+- controllers/ # Handle requests 
+- models/ # Mongoose schemas
+- routes/ # Api route definitions
+- middleware/ # Auth, role-based middleware
+- utils/ # Utility function(sendEmail)
+- .env / # Environment variables
+- index.js / # Entry point
+- package.json / # Dependencies & scripts
+- README.md / # Project documentation
 
 
 

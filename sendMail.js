@@ -10,27 +10,28 @@ const sendForgotPasswordEmail = async(email, token) => {
         }     
        })
 
-
+      const resetLink = `https://www.yourcareerex.com/reset-password/${token}`
        const mailDetails = {
-        from: `${process.env.EMAIL}`,
-        to: `${email}`,
+        from: process.env.EMAIL,
+        to: email,
         subject: "Reset Password Notification",
-        html: `<h1>Here is the token to reset your password, Please click on the button
-        <a class"" href='https://www.yourcareerex.com/reset-password/${token}'>Reset Password </a>
+        html:`
+        <h2>Reset Your Password</h2>
+        <p>You requested to reset your password. Click the button below to proceed</p>
+        <p>
+        <a href = "${resetLink}" style = "display:inline-block; padding: 10px 20px; background-color:#007bff;color:#fff;text-decoration:none;border-radius:5px;">Reset Password</a>
+        </p>
+        <p>If the button doesn't work, make use of this link by copying and pasting in your browser</p>
+        p><a href="${resetLink}">${resetLink}</a></p>
+        <p>Token (for reference): <strong>${token}</strong></p>
+        <p>If you didn't request this, you can ignore this email.</p>
 
-            if the button does not work for any reason, please click the link below
-
-             <a href='https://www.yourcareerex.com/reset-password/${token}'>Reset Password </a>
-
-            
-            
-            ${token}
-            </h1>`
-       
-    } 
+        `
+         } 
     await mailTransport.sendMail(mailDetails)
+    console.log(`Reset email sent to ${email}`)
      }catch (error) {
-        console.log(error)
+        console.log("Error sending reset email", error)
         
      }
     }

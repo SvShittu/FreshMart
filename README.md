@@ -1,5 +1,17 @@
 # 🛒 FreshMart Backend
+# 🛒 FreshMart Backend
 
+This is the backend for the FreshMart online grocery store, built with Node.js, Express, and MongoDB.
+
+## 🚀 Live API
+
+The backend is deployed at:  
+➡️ [https://freshmart-j8l2.onrender.com](https://freshmart-j8l2.onrender.com)
+
+## 📄 API Documentation
+
+You can view the full API documentation via Postman or Swagger:  
+➡️ https://freshmart-j8l2.onrender.com/docs/postman_collection.json
 This is the backend API for FreshMart(SuperMarket E-Commerce) — an online grocery store platform.
 
 ## 🚀 Features

@@ -23,12 +23,12 @@ const handleUserRegistration= async(req, res)=>{
             })
         await user.save()
         return res.status(201).json({
-            _id: Users._id,
-            username: Users.userName,
-            email: Users.email,
-            token: generateToken(Users._id),
+            _id: user._id,
+            userName: user.userName,
+            email: user.email,
+            token: generateToken(user._id),
             password: hashedPassword,
-            role: Users.role
+            role: user.role
         })
 
 
@@ -45,10 +45,10 @@ const handleLogin = async(req, res)=>{
         const user = await Users.findOne({email})
         if(user && (await user.matchPassword(password))){
             return res.status(200).json({
-                _id: Users._id,
-                username: Users.userName,
-                email: Users.email,
-                token: generateToken(Users._id)
+                _id: user._id,
+                userName: user.userName,
+                email: user.email,
+                token: generateToken(user._id)
             })
         }else {
             return res.status(401).json({message:"Invalid email or password"})

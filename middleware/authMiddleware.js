@@ -6,32 +6,33 @@ const authMiddleware = async (req, res, next)=>{
      let token
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     try {
-      token = req.headers.authorization.split("")[1]
+      token = req.headers.authorization.split(" ")[1]
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
       req.user = await User.findById(decoded.id).select('-password')
-      next()
+       return next()
     } catch (error) {
-      res.status(401).json({ message: 'Not authorized, token failed' })
+      return res.status(401).json({ message: 'Not authorized, token failed' })
     }
   }
-  if (!token) {
-    res.status(401).json({ message: 'Not authorized, no token' })
-  }
+  
+   return res.status(401).json({ message: 'Not authorized, no token' })
+  
 }
-const adminMiddleware = (req, res, next)=> {
+const roleMiddleware = (req, res, next)=> {
     if(req.user.role !== "admin"){
         res.status(403).json({message:"Forbidden"})
-        next()
+      
     }
+    next()
 }
 
 
 const validateRegistration = async(req, res, next) =>{
-  const{username, email, password} = req.body
+  const{userName, email, password} = req.body
 
   const errors = []
 
-  if(!username){
+  if(!userName){
     errors.push("Please add your UserName")
   }
   if(!email){
@@ -40,8 +41,9 @@ const validateRegistration = async(req, res, next) =>{
     errors.push("email format is incorrect")
   }
   
-
-  if(password.length < 8){
+if(!password){
+  errors.push("Please add your password")
+} else if(password.length < 8){
     errors.push("Minimum of eight characters required for password")
   }
 
@@ -80,4 +82,4 @@ function validEmail(email){
 }
 
 
-module.exports = {authMiddleware, adminMiddleware, validEmail, validateLogin, validateRegistration}
+module.exports = {authMiddleware, roleMiddleware, validEmail, validateLogin, validateRegistration}

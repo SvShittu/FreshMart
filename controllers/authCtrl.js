@@ -1,42 +1,44 @@
 const Users = require("../models/authModel")
 const bcryptjs = require("bcryptjs")
-const generateToken = require("../utils/generateToken")
+const {generateToken} = require("../utils/generateToken");
+const { sendForgotPasswordEmail } = require("../utils/sendMail");
 
 
+const handleUserRegistration = async (req, res) => {
+  try {
+    const { userName, email, password, role = "user" } = req.body;
 
-const handleUserRegistration= async(req, res)=>{
-
-    try {
-        const{userName, email, password, role} = req.body
-        const existingUser = await Users.findOne({email})
-        if(existingUser){
-            return res.status(400).json({message: "User already exists"})
-        }
-      const hashedPassword = await bcryptjs.hash(password, 12)
-        //User Creation
-
-        const user = new Users({
-            userName,
-             email,
-              password: hashedPassword,
-               role,
-            })
-        await user.save()
-        return res.status(201).json({
-            _id: user._id,
-            userName: user.userName,
-            email: user.email,
-            token: generateToken(user._id),
-            password: hashedPassword,
-            role: user.role
-        })
-
-
-    } catch (error) {
-        return res.status(500).json({message: error.message})
+    if (!userName ||!email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
     }
 
-}
+    const existingUser = await Users.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists" });
+    }
+
+    const hashedPassword = await bcryptjs.hash(password, 12);
+
+    const user = new Users({
+      userName,
+      email,
+      password: hashedPassword,
+      role,
+    });
+
+    await user.save();
+
+    return res.status(201).json({
+      _id: user._id,
+      userName: user.userName,
+      email: user.email,
+      role: user.role,
+      token: generateToken(user._id),
+    });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
 
 
 const handleLogin = async(req, res)=>{
@@ -59,7 +61,7 @@ const handleLogin = async(req, res)=>{
 }
 
  const handleForgetPassword = async(req, res) => {
-        const{email, userName} = req.body
+        const{email} = req.body
         try {
             const user = await Users.findOne({email})
             
@@ -99,7 +101,12 @@ const handleResetPassword = async(req, res)=>{
 
     
 const handleLogout = async(req, res) => {
-    res.send("logout user")
+    try {
+        return res.status(200).json({message: "User successfully logged out"})
+    } catch (error) {
+        return res.status(500).json({message: "Logout failed"})
+    }
+    
 }
 
 module.exports = {

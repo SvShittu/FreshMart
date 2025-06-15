@@ -10,6 +10,7 @@ const limiter = require("./middleware/rateLimiter")
 dotenv.config()
 connectDB()
 const app = express()
+const path = require("path")
 app.use(express.json())
 
 const PORT = process.env.PORT || 8081
@@ -29,6 +30,8 @@ app.use("/api/orders", orderRoutes)
 app.use("/api/categories", categoryRoutes)
 app.use("/api/payment", paymentRoutes)
 
+app.use('/docs', express.static(path.join(__dirname, 'public')))
+
 app.use((req, res, next) => {
-  res.status(404).json({ message: "Route not found" });
-});
+  res.status(404).json({ message: "Route not found" })
+})

@@ -18,12 +18,17 @@ app.listen(PORT, ()=>{
 })
 
 app.use(limiter)
+app.get('/', (req, res) => {
+
+  res.send('Welcome to my freshmart backend API!')
+
+})
 app.use("/api/users", authRoutes)
 app.use("/api/products", productRoutes)
 app.use("/api/orders", orderRoutes)
 app.use("/api/categories", categoryRoutes)
 app.use("/api/payment", paymentRoutes)
 
-// app.use((req, res, next) =>{
-//     res.status(404).json({message: "Route not found"})
-// } )
+app.use((req, res, next) => {
+  res.status(404).json({ message: "Route not found" });
+});

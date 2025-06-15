@@ -1,24 +1,23 @@
-const express = require("express")
-const Product = require("../models/productModel")
-const{adminMiddleware, authMiddleware} = require("../middleware/authMiddleware")
-const router = express.Router()
+const express = require("express");
+const {
+  createProduct,
+  getAllProducts,
+  getProductById,
+  updateProduct,
+  deleteProduct,
+} = require("../controllers/productCtrl");
 
-//Users can browse products and view product details
-router.get("/", async(req, res) =>{
-    const products = await Product.find().populate("category")
-    res.json(products)
-} )
+const { authMiddleware } = require("../middleware/authMiddleware");
+const roleMiddleware = require("../middleware/roleMiddleware");
 
+const router = express.Router();
 
-router.get("/:id", async(req, res) => {
-    const product = await Product.findById(req.params.id).populate("category")
-    if(!product) return res.status(404).json({message: "Product not found"})
-    
-})
-
+router.get("/", getAllProducts);
+router.get("/:id", getProductById);
 
 
+router.post("/", authMiddleware, roleMiddleware("admin"), createProduct);
+router.put("/:id", authMiddleware, roleMiddleware("admin"), updateProduct);
+router.delete("/:id", authMiddleware, roleMiddleware("admin"), deleteProduct);
 
-
-
-module.exports = router
+module.exports = router;

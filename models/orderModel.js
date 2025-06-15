@@ -6,10 +6,16 @@ const orderSchema = new mongoose.Schema({
    items: [
     {
       product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
-      quantity: {type:  Number, require: true}
+      quantity: {type:  Number,
+        required: true,
+        min: [1, "Quantity must be at least 1"],
+
+      }
     },
   ],
-  total:{type: Number, require: true},
+  total:{type: Number,
+     required: true,
+      min: [0, "Total must be positive"],},
   paidAt: {type: Date},
   isPaid: {type: Boolean, default: false},
   paymentInfo: {

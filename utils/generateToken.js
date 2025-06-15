@@ -15,6 +15,10 @@ const accessToken = (Users) => {
 
   }
 
+  const generateResetToken = (email) => {
+    return jwt.sign({ email }, process.env.JWT_SECRET, {
+      expiresIn: "15m",
+    });
+  }
 
-
-module.exports = {generateToken, accessToken}
+module.exports = {generateToken, accessToken, generateResetToken}

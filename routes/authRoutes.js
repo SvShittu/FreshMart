@@ -11,6 +11,6 @@ router.post("/register",validateRegistration, handleUserRegistration)
 router.post("/login",validateLogin, handleLogin)
 router.post("/forget-password", handleForgetPassword)
 router.post("/reset-password", handleResetPassword )
-router.get("/logout", handleLogout)
+router.post("/logout", handleLogout)
 
 module.exports = router

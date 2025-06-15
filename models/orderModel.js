@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const bcrypt = require("bcryptjs")
 
 const orderSchema = new mongoose.Schema({
-   user: {type: mongoose.SchemaTypes.ObjectId, ref :"User"},
+   user: {type: mongoose.SchemaTypes.ObjectId, ref :"Users"},
    items: [
     {
       product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
